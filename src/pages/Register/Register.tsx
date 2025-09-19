@@ -10,7 +10,7 @@ import {
 } from "./styles";
 import { Link, useNavigate } from "react-router-dom";
 import type { IFormRegisterData } from "../../types/formRegisterData";
-import { addUser, getAllUser } from "../../services/user";
+import { registerUser } from "../../services/user";
 
 type IFormRegisterForm = IFormRegisterData & {
   confirmPassword: string;
@@ -32,7 +32,7 @@ export default function Register() {
   const onSubmit = async (data: IFormRegisterForm) => {
     try {
       const { confirmPassword, ...userData } = data;
-      await addUser(userData);
+      await registerUser(userData);
       navigate("/auth/login");
     } catch (error) {
       console.error(error);
