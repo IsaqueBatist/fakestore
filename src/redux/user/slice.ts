@@ -1,9 +1,9 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { IUser } from "../../types/user";
+import type { UserJWT } from "../../types/user";
 
 
 export interface UserState {
-  currentUser: IUser | null;
+  currentUser: UserJWT | null;
   isAuthenticated: boolean;
 }
 
@@ -17,12 +17,12 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<IUser>) => {
+    login: (state, action: PayloadAction<UserJWT>) => {
       state.currentUser = action.payload;
       state.isAuthenticated = true;
     },
     logout: (state) => {
-      state.currentUser = {} as IUser;
+      state.currentUser = {} as UserJWT;
       state.isAuthenticated = false;
     },
   },

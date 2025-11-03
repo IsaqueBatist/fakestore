@@ -1,4 +1,4 @@
 export interface IFormLoginData {
-    username: string,
-    password: string
+    email: string,
+    password_hash: string
 }
