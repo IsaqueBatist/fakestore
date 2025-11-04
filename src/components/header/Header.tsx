@@ -1,11 +1,8 @@
 import { ShoppingCart } from 'lucide-react'
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../../assets/svg/fakestore.svg'
 import { selectProductsCount } from '../../redux/cart/cart.selectors'
-import type { RootState } from '../../redux/store'
-import { logout } from '../../redux/user/slice'
 import Cart from '../Cart/Cart'
 import {
   DropdownMenu,
@@ -18,20 +15,21 @@ import {
   UserName,
   UserProfile,
 } from './styles'
+import { useAppDispatch, useAppSelector } from '../../redux/store'
+import { logout } from '../../redux/auth/authSlice.slice'
 
 export default function Header() {
   const [cartVisibla, setCartVisible] = useState(false)
 
-  const username = useSelector((state: RootState) => state.userReducer.currentUser?.username)
+  const navigate = useNavigate()
+  const productCount = useAppSelector(selectProductsCount)
 
-  const productCount = useSelector(selectProductsCount)
-
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const handleLogout = () => {
     dispatch(logout())
-    localStorage.removeItem('token')
-    localStorage.removeItem('username')
+    navigate('/auth/login')
+    localStorage.removeItem('authToken')
   }
 
   return (
@@ -48,9 +46,9 @@ export default function Header() {
         </ul>
       </Navbar>
       <UserContainer role="complementary">
-        <UserName>{username}</UserName>
+        <UserName>Teste</UserName>
         <ProfileWrapper>
-          <UserProfile src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${username}`} />
+          <UserProfile src={`https://api.dicebear.com/7.x/adventurer/svg?seed=teste`} />
           <DropdownMenu>
             <button type="button" onClick={handleLogout}>
               Sair

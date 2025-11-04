@@ -5,6 +5,7 @@ import Home from '../pages/home/Home'
 import Login from '../pages/Login/Login'
 import ProductDetail from '../pages/ProductDetail/ProductDetail'
 import Register from '../pages/Register/Register'
+import PublicOnlyRoute from '../Auth/PublicOnlyRoute'
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -15,7 +16,7 @@ export default function AppRoutes() {
             <Route path="productDetail/:id" element={<ProductDetail />}></Route>
           </Route>
         </Route>
-        <Route path="auth">
+        <Route path="auth" element={<PublicOnlyRoute/>}>
           <Route path="login" element={<Login />}></Route>
           <Route path="register" element={<Register />}></Route>
         </Route>

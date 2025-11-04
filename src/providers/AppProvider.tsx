@@ -3,9 +3,9 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 import { ThemeProvider } from 'styled-components'
-import store from '../redux/store'
 import GlobalStyle from '../styles/global'
 import { theme } from '../styles/theme'
+import { store } from '../redux/store'
 
 const fallbackRender = ({ error }: { error: Error }) => (
   <div role="alert">

@@ -1,11 +1,10 @@
-import { useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import type { RootState } from "../redux/store";
+import { useAppSelector } from "../redux/store";
+import { selectIsLoggedIn } from "../redux/auth/authSelectors.selector";
 
 export default function RequireAuth() {
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.userReducer.isAuthenticated
-  );
+  const isAuthenticated = useAppSelector(selectIsLoggedIn);
+  console.log(isAuthenticated)
   const location = useLocation();
 
   if (!isAuthenticated) {

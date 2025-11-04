@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '../../redux/store'
 import { Link, useNavigate } from 'react-router-dom'
-import { Services } from '../../services'
 import type { IUserDataLogin } from '../../types/authService'
 import type { IFormLoginData } from '../../types/formLoginData'
 import {
@@ -13,7 +12,8 @@ import {
   MainLoginContainer,
   SubmmitButton,
 } from './styles'
-import { login } from '../../redux/user/slice'
+import { loginUser } from '../../redux/auth/authThunks.thunk'
+import { selectAuthLoading, selectauthReducerError } from '../../redux/auth/authSelectors.selector'
 
 const defaultValues: IFormLoginData = {
   email: '',
@@ -23,7 +23,6 @@ const defaultValues: IFormLoginData = {
 export default function Login() {
   const {
     register,
-    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<IFormLoginData>({
@@ -31,23 +30,27 @@ export default function Login() {
     mode: 'onBlur',
   })
 
-  const dispatch = useDispatch()
-
+  const dispatch = useAppDispatch()
+  const isLoading = useAppSelector(selectAuthLoading);
+  const error = useAppSelector(selectauthReducerError);
   const navigate = useNavigate()
 
   const onSubmit = async (data: IUserDataLogin) => {
     try {
-      const acessToken = await Services.authService.authenticateUser(data);
-      dispatch(login(acessToken))
+      await dispatch(loginUser(data)).unwrap
       navigate('/')
     } catch (error: unknown) {
-      const message = error.message;
-      console.log(message)
+      if(error instanceof Error){
+        const message = error.message;
+        console.log(message)
+      }
     }
   }
 
   return (
     <MainLoginContainer>
+      {isLoading && 'Carregando'}
+      {error && (<p>{error}</p>)}
       <FormLogin onSubmit={handleSubmit(onSubmit)}>
         <FormTittle>Login</FormTittle>
         <InputForm>

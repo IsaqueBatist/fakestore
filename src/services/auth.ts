@@ -8,8 +8,7 @@ export const authenticateUser = async (userData: IUserDataLogin): Promise<string
     const accessToken = response.data.accessToken
     api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
     localStorage.setItem('authToken', accessToken);
-
-    return accessToken;
+    return accessToken
   } catch (error) {
     console.error(error)
     if(axios.isAxiosError(error) && error.request){

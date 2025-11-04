@@ -1,7 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import userReducer from './user/slice'
 import cartReducer from './cart/slice'
+import authReducer from './auth/authSlice.slice'
 
-const rootReducer = combineReducers({userReducer, cartReducer})
+const rootReducer = combineReducers({cartReducer, authReducer})
 
 export default rootReducer;
